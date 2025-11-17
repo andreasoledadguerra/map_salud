@@ -6,8 +6,9 @@ import folium
 from streamlit_folium import st_folium
 frome folium.plugins import MarkerCluster
 
+st.set_page_config(layout="wide")
+st.title("Map Salud - localizar establecimientos de salud públicos cercanos")
 
-st.title("Map Salud")
 
 # Load geospatial data
 gdf = gpd.read_file("establecimientos-salud-publicos.csv")
