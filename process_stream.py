@@ -3,12 +3,14 @@ import numpy as np
 
 
 
-#def load_data(path="establecimientos-salud-publicos.csv"):
-#    df = pd.read_csv(path, delimiter=";")
-#    df = df[["lat", "long", "fna"]].copy()
-#    df["lat"] = df["lat"].astype(float)
-#    df["long"] = df["long"].astype(float)
-#    df["fna"] = df["fna"].astype(str)
+def load_data(path="establecimientos-salud-publicos.csv"):
+    df = pd.read_csv(path, delimiter=";")
+    df = df[["lat", "long", "fna"]].copy()
+    df["lat"] = df["lat"].astype(float)
+    df["long"] = df["long"].astype(float)
+    df["fna"] = df["fna"].astype(str)
+    
+    return df
 
 #def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
 #    R = 6371
