@@ -61,9 +61,9 @@ def load_data(path="establecimientos-salud-publicos.csv"):
     return df  
 
 # Prepara BallTree sobre coordenadas en radianes (Haversine metric)
-#coords_rad = np.vstack([np.radians(df["lat"].values), np.radians(df["lon"].values)]).T
+coords_rad = np.vstack([np.radians(df["lat"].values), np.radians(df["lon"].values)]).T
 # BallTree espera (n_samples, n_features) as coords in radians with metric='haversine'
-#tree = BallTree(coords_rad, metric="haversine")
+tree = BallTree(coords_rad, metric="haversine")
  
     
 # Decorator to define FastAPI endpoint
