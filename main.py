@@ -10,18 +10,22 @@ st.set_page_config(layout="wide")
 st.title("Map Salud - localizar establecimientos de salud públicos cercanos")
 
 
-# Load geospatial data
-gdf = gpd.read_file("establecimientos-salud-publicos.csv")
+# Load and prepare geospatial data
+@st.cache_data
+def load_data(path="establecimientos-salud-publicos.csv"):
+    df = pd.read_csv(path, delimiter=";")
+    # Asegurate de que tus columnas se llamen exactamente 'lat' y 'long'
+    df = df[["lat", "long", "fna"]].copy()
+    df["lat"] = df["lat"].astype(float)
+    df["long"] = df["long"].astype(float)
+    df["fna"] = df["fna"].astype(str)
+    return df  
 
-gdf = gdf[["lat","long","fna"]]
 
-# Copiamos y convertimos columnas
-gdf = gdf.copy()
 
-# Fuerza conversiones a tipos nativos
-gdf["lat"] = gdf["lat"].astype(float)
-gdf["long"] = gdf["long"].astype(float)
-gdf["fna"] = gdf["fna"].astype(str)
+
+
+
 
 # Convertir a lista de dicts para pydeck
 data = gdf.to_dict(orient="records")
