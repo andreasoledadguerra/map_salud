@@ -3,7 +3,7 @@ import numpy as np
 
 
 
-def load_data(path="establecimientos-salud-publicos.csv"):
+def load_data(path: str) -> pd.DataFrame:
     df = pd.read_csv(path, delimiter=";")
     df = df[["lat", "long", "fna"]].copy()
     df["lat"] = df["lat"].astype(float)
