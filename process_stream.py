@@ -12,7 +12,7 @@ def load_data(path: str) -> pd.DataFrame:
     
     return df
 
-def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
+def haversine_vectorized(lat1:float, lon1:float, lat2_arr:float, lon2_arr:float) -> np.ndarray:
     R = 6371
     lat1_r = np.radians(lat1)
     lon1_r = np.radians(lon1)
