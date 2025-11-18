@@ -17,14 +17,24 @@ BASE_URL_MAP_SALUD = "http://localhost:8501"
 #url_map_salud = f"{BASE_URL_MAP_SALUD}/salud"
 
 
-#NO SÉ SI ESTO ESTÁ BIEN PORQUE LOS DATOS DE ENTRADA ES EL CLICK DEL USUARIO EN EL MAPA(coordenadas)
-# Pydantic response model for FastAPI endpoint
-#class SaludResponseModel(BaseModel):
-#    lat: float
-#    lon: float
-#    radius_km: float
-#    top_n: int
-#    results: List[Dict[str, Any]]
+# Pydantic request / response  models
+class SaludRequestModel(BaseModel):
+    lat: float
+    lon: float
+    radius_km: float = 1.0
+    top_n: int = 20
+
+class SaludResultModel(BaseModel):
+    lat: float
+    lon: float
+    fna: str
+    distance_km: float
+    
+class SaludResponseModel(BaseModel):
+    request: SaludRequestModel
+    results: List[SaludResultModel]
+    
+
     
 # Decorator to define FastAPI endpoint
 #@app.get("/establecimientos", response_model=SaludResponseModel)
