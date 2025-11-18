@@ -26,21 +26,3 @@ df = load_data()
 
 
 
-
-# Convertir a lista de dicts para pydeck
-data = gdf.to_dict(orient="records")
-
-
-#Definir la capa de puntos
-layer = pdk.Layer("ScatterplotLayer",
-                  data=data,
-                  get_position='[long, lat]',
-                  get_radius=100,
-                  )
-
-#Definir la vista inicial del mapa
-view_state = pdk.ViewState(latitude=gdf['lat'].mean(), longitude=gdf['long'].mean(), zoom=12, pitch=0)
-
-
-st.pydeck_chart(pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip={"text": "{fna}"}))
-
