@@ -10,6 +10,7 @@ from folium.plugins import MarkerCluster
 st.set_page_config(page_title="Map Salud", layout="wide", page_icon="🏥")
 
 st.title("Map Salud - localizar establecimientos de salud públicos cercanos")
+st.markdown("**Instrucciones:** hace _click_ en el mapa para seleccionar un punto geográfico.")
 
 
 # Load and prepare geospatial data
@@ -69,7 +70,6 @@ if show_all_markers:
         ).add_to(mc)
 
 
-st.markdown("**Instrucciones:** hace _click_ en el mapa para seleccionar un punto geográfico.")
 map_data = st_folium(m, width=900, height=600)
 
 
