@@ -6,7 +6,9 @@ import folium
 from streamlit_folium import st_folium
 from folium.plugins import MarkerCluster
 
-st.set_page_config(layout="wide")
+# Configure page
+st.set_page_config(page_title="Map Salud", layout="wide", page_icon="🏥")
+
 st.title("Map Salud - localizar establecimientos de salud públicos cercanos")
 
 
