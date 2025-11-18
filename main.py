@@ -69,3 +69,52 @@ if show_all_markers:
 st.markdown("**Instrucciones:** hace _click_ en el mapa para seleccionar un punto; el app mostrará establecimientos dentro del radio seleccionado.")
 map_data = st_folium(m, width=900, height=600)  
 
+# Process click event
+if map_data and map_data.get("last_clicked"):
+    clicked = map_data["last_clicked"]
+    click_lat = clicked["lat"]
+    click_lon = clicked["lng"]
+
+    st.sidebar.success(f"Punterp en lat: {click_lat:.6f}, lon: {click_lon:.6f}")
+
+    # Calculate vectorized distances
+    distances_km = haversine_vectorized(click_lat, click_lon, df["lat"].values, df["long"].values)
+    df_results = df.copy()
+    df_results["distance_km"] = distances_km
+
+    # Filter and sort results
+    nearby = df_results[df_results["distance_km"] <= radius_km].sort_values(by="distance_km").head(int(top_n))
+
+    # Display results
+    st.sidebar.write(f"Encontrados {len(nearby)} establecimientos dentro de {radius_km} km.")
+    st.subheader("Establecimientos cercanos")
+    st.dataframe(nearby.reset_index(drop=True))
+
+    m2 = folium.Map(location=[click_lat, click_lon], zoom_start=14)
+    folium.Marker(
+        location=[click_lat, click_lon], tooltip="Punto seleccionado",
+        icon=folium.Icon(color="red", icon="info-sign").add_to(m2)
+
+    #
+    for _, row in nearby.iterrows():
+        folium.CircleMarker(
+            location=(r["lat"], r["long"]),
+            radius=6,
+            color= "blue",
+            fill=True,
+            fill_opacity=0.9,
+            tooltip=f"{r['fna']} ({r['distance_km']:.2f} km"
+        ).add_to(m2)
+    
+    folium_Circle(
+        location=(click_lat, click_lon),
+        radius=radius_km * 1000,
+        color="green",
+        fill=False).add_to(m2)
+
+    st_folium(m2, width=900, height=600)
+
+else:
+    st.info("Haga click en el mapa para buscar establecimientos de salud públicos cercanos.")
+
+
