@@ -14,23 +14,6 @@ from typing import Any, Dict, List
 from streamlit_folium import st_folium
 
 
-#Create FastAPI app
-app = FastAPI()
-
-#Base url for streamlit app
-BASE_URL_MAP_SALUD = "http://localhost:8501"
-
-#Streamlit API endpoint to get data
-url_map_salud = f"{BASE_URL_MAP_SALUD}/salud"
-
-# Pydantic response model for FastAPI endpoint
-class SaludResponseModel(BaseModel):
-    lat: float
-    lon: float
-    radius_km: float
-    top_n: int
-    results: List[Dict[str, Any]]
-
 # Configure page
 st.set_page_config(page_title="Map Salud", layout="wide", page_icon="🏥")
 
@@ -119,6 +102,10 @@ if map_data and map_data.get("last_clicked"):
     st.sidebar.write(f"Encontrados {len(nearby)} establecimientos dentro de {radius_km} km.")
     st.subheader("Establecimientos cercanos")
     st.dataframe(nearby.reset_index(drop=True))
+    
+
+
+
 
     # New map for results
     m2 = folium.Map(location=[click_lat, click_lon], zoom_start=14)
