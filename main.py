@@ -19,6 +19,7 @@ app = FastAPI()
 BASE_URL_MAP_SALUD = "http://localhost:8501"
 
 #Streamlit API endpoint to get data
+url_map_salud = f"{BASE_URL_MAP_SALUD}/salud"
 
 # Configure page
 st.set_page_config(page_title="Map Salud", layout="wide", page_icon="🏥")
