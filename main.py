@@ -39,9 +39,16 @@ def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
     c = 2 * np.arcsin(np.sqrt(a))
     return R * c
 
+
 # Sidebar for user input
 st.sidebar.header("Buscar establecimientos públicos de salud")
 radius_km = st.sidebar.number_input("Radio (km) para buscar", min_value=0.1, max_value=100.0, value=1.0, step=0.1)
 top_n = st.sidebar.number_input("Máx. resultados a mostrar", min_value=1, max_value=200, value=20, step=1)
 show_all_markers = st.sidebar.checkbox("Mostrar todos los establecimientos (espere)", value=False)
+
+
+# Create folium map  centered on data mean
+center_lat = df["lat"].mean()
+center_lon = df["lon"].mean()
+m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
 
