@@ -14,14 +14,14 @@ st.title("Map Salud - localizar establecimientos de salud públicos cercanos")
 @st.cache_data
 def load_data(path="establecimientos-salud-publicos.csv"):
     df = pd.read_csv(path, delimiter=";")
-    # Asegurate de que tus columnas se llamen exactamente 'lat' y 'long'
+    
     df = df[["lat", "long", "fna"]].copy()
     df["lat"] = df["lat"].astype(float)
     df["long"] = df["long"].astype(float)
     df["fna"] = df["fna"].astype(str)
     return df  
 
-
+df = load_data()
 
 
 
