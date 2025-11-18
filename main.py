@@ -67,7 +67,7 @@ if show_all_markers:
         ).add_to(mc)
 
 
-st.markdown("**Instrucciones:** hace _click_ en el mapa para seleccionar un punto.")
+st.markdown("**Instrucciones:** hace _click_ en el mapa para seleccionar un punto geográfico.")
 map_data = st_folium(m, width=900, height=600)
 
 
@@ -124,4 +124,4 @@ if map_data and map_data.get("last_clicked"):
     st_folium(m2, width=900, height=600)
 
 else:
-    st.info("Haga click en el mapa para buscar establecimientos cercanos.")
+    st.info("Haga click en el mapa para buscar establecimientos de salud públicos cercanos al lugar de su interés.")
