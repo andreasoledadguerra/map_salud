@@ -11,7 +11,7 @@ from typing import Any, Dict, List
 app = FastAPI()
 
 #Base url for streamlit app
-#BASE_URL_MAP_SALUD = "http://localhost:8501"
+BASE_URL_MAP_SALUD = "http://localhost:8501"
 
 #Streamlit API endpoint to get data
 #url_map_salud = f"{BASE_URL_MAP_SALUD}/salud"
