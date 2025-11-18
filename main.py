@@ -15,7 +15,8 @@ from folium.plugins import MarkerCluster
 #Create FastAPI app
 app = FastAPI()
 
-
+#Base url for streamlit app
+BASE_URL = "http://localhost:8501"
 
 # Configure page
 st.set_page_config(page_title="Map Salud", layout="wide", page_icon="🏥")
