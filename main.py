@@ -1,8 +1,9 @@
-import streamlit as st
-import geopandas as gpd
-import pandas as pd
-import numpy as np
 import folium
+import geopandas as gpd
+import numpy as np
+import pandas as pd
+import streamlit as st
+
 from streamlit_folium import st_folium
 from folium.plugins import MarkerCluster
 
