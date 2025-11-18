@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import folium
 from streamlit_folium import st_folium
-frome folium.plugins import MarkerCluster
+from folium.plugins import MarkerCluster
 
 st.set_page_config(layout="wide")
 st.title("Map Salud - localizar establecimientos de salud públicos cercanos")
