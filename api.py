@@ -7,9 +7,8 @@ from pydantic import BaseModel
 from typing import Any, Dict, List
 
 
-
 #Create FastAPI app
-#app = FastAPI()
+app = FastAPI()
 
 #Base url for streamlit app
 #BASE_URL_MAP_SALUD = "http://localhost:8501"
