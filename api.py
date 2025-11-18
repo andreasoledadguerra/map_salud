@@ -4,6 +4,7 @@ import os
 
 from fastapi import FastAPI
 from pydantic import BaseModel
+from sklearn.neighbors import BallTree
 from typing import Any, Dict, List
 
 
@@ -48,6 +49,22 @@ def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
     a = np.sin(dlat / 2)**2 + np.cos(lat1_r) * np.cos(lat2_r) * np.sin(dlon / 2)**2
     c = 2 * np.arcsin(np.sqrt(a))
     return R * c
+ 
+ # Load and prepare geospatial data
+@st.cache_data
+def load_data(path="establecimientos-salud-publicos.csv"):
+    df = pd.read_csv(path, delimiter=";")
+    df = df[["lat", "long", "fna"]].copy()
+    df["lat"] = df["lat"].astype(float)
+    df["long"] = df["long"].astype(float)
+    df["fna"] = df["fna"].astype(str)
+    return df  
+
+# Prepara BallTree sobre coordenadas en radianes (Haversine metric)
+#coords_rad = np.vstack([np.radians(df["lat"].values), np.radians(df["lon"].values)]).T
+# BallTree espera (n_samples, n_features) as coords in radians with metric='haversine'
+#tree = BallTree(coords_rad, metric="haversine")
+ 
     
 # Decorator to define FastAPI endpoint
 #@app.get("/establecimientos", response_model=SaludResponseModel)
