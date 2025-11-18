@@ -47,8 +47,25 @@ top_n = st.sidebar.number_input("Máx. resultados a mostrar", min_value=1, max_v
 show_all_markers = st.sidebar.checkbox("Mostrar todos los establecimientos (espere)", value=False)
 
 
-# Create folium map  centered on data mean
+# Create folium map centered on data mean
 center_lat = df["lat"].mean()
 center_lon = df["lon"].mean()
 m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
+
+
+# Handle map click to find nearby establishments
+if show_all_markers:
+    mc = MarkerCluster().add_to(m)
+    for _, row in df.iterrows():
+        folium.CircleMarker(
+            location=(row["lat"], row["long"]),
+            radius=4,
+            tooltip=row["fna"],
+            color="#666666",
+            fill=True,
+            fill_opacity=0.7
+        ).add_to(mc)
+
+st.markdown("**Instrucciones:** hace _click_ en el mapa para seleccionar un punto; el app mostrará establecimientos dentro del radio seleccionado.")
+map_data = st_folium(m, width=900, height=600)  
 
