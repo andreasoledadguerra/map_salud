@@ -2,15 +2,14 @@ import folium
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-import requests
-import uvicorn 
+#import requests
 
 import streamlit as st
 
-from fastapi import FastAPI
-from folium.plugins import MarkerCluster
-from pydantic import BaseModel
-from typing import Any, Dict, List
+#from fastapi import FastAPI
+#from folium.plugins import MarkerCluster
+#from pydantic import BaseModel
+#from typing import Any, Dict, List
 from streamlit_folium import st_folium
 
 
@@ -34,23 +33,23 @@ def load_data(path="establecimientos-salud-publicos.csv"):
 df = load_data()
 
 
-# Haversine distance function
-def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
-    R = 6371
-    lat1_r = np.radians(lat1)
-    lon1_r = np.radians(lon1)
-    lat2_r = np.radians(lat2_arr)
-    lon2_r = np.radians(lon2_arr)
+## Haversine distance function
+#def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
+#    R = 6371
+#    lat1_r = np.radians(lat1)
+#    lon1_r = np.radians(lon1)
+#    lat2_r = np.radians(lat2_arr)
+#    lon2_r = np.radians(lon2_arr)
+#
+#    dlat = lat2_r - lat1_r
+#    dlon = lon2_r - lon1_r
+#
+#    a = np.sin(dlat / 2)**2 + np.cos(lat1_r) * np.cos(lat2_r) * np.sin(dlon / 2)**2
+#    c = 2 * np.arcsin(np.sqrt(a))
+#    return R * c
 
-    dlat = lat2_r - lat1_r
-    dlon = lon2_r - lon1_r
 
-    a = np.sin(dlat / 2)**2 + np.cos(lat1_r) * np.cos(lat2_r) * np.sin(dlon / 2)**2
-    c = 2 * np.arcsin(np.sqrt(a))
-    return R * c
-
-
-# Sidebar
+# Sidebar controls
 st.sidebar.header("Buscar establecimientos públicos de salud")
 radius_km = st.sidebar.number_input("Radio (km)", min_value=0.1, max_value=100.0, value=1.0, step=0.1)
 top_n = st.sidebar.number_input("Máx. resultados", min_value=1, max_value=200, value=20, step=1)
@@ -58,9 +57,8 @@ show_all_markers = st.sidebar.checkbox("Mostrar todos los establecimientos", val
 
 
 # Create main map
-center_lat = df["lat"].mean()
-center_lon = df["long"].mean()
-
+center_lat = float(df["lat"].mean())
+center_lon = float(df["long"].mean())
 m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
 
 
