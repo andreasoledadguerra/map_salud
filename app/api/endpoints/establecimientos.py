@@ -9,11 +9,11 @@ from app.data.process_load_data import load_data
 from app.services.geospatial import haversine_vectorized
 
 
-#app = FastAPI()
-#
-#df = load_data()
-#coords_rad = np.vstack([np.radians(df["lat"].values), np.radians(df["long"].values)]).T
-#tree = BallTree(coords_rad, metric="haversine")
+app = FastAPI()
+
+df = load_data()
+coords_rad = np.vstack([np.radians(df["lat"].values), np.radians(df["long"].values)]).T
+tree = BallTree(coords_rad, metric="haversine")
 #
 #@app.post("/api/salud", response_model=SaludResponseModel)
 #def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
