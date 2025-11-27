@@ -18,7 +18,7 @@ tree = BallTree(coords_rad, metric="haversine")
 # Endpoint para establecimientos de salud
 @app.post("/api/salud", response_model=SaludResponseModel)
 def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
-    #try: 
+    try: 
         lat = req.lat
         long = req.long 
         radius_km = req.radius_km
@@ -49,5 +49,5 @@ def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
         ]
 
         return SaludResponseModel(request=req, results=results)
-    #except Exception as e:
-    #    raise HTTPException(status_code=500, detail=str(e))
+    except Exception as e:
+       raise HTTPException(status_code=500, detail=str(e))
