@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-import os
 from geospatial import haversine_vectorized
 
 def test_haversine_vectorized():
