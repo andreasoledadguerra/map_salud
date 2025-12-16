@@ -6,6 +6,8 @@ from sklearn.neighbors import BallTree
 from typing import List
 
 RADIUS_EARTH = 6371.0
+COL_LAT = "lat"
+COL_LONG = "long"
 
 app = FastAPI()
 
@@ -44,15 +46,15 @@ def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
 # Load data 
 def load_data(path="establecimientos-salud-publicos.csv"):
     df = pd.read_csv(path, delimiter=";")
-    df = df[["lat", "long", "fna"]].copy()
-    df["lat"] = df["lat"].astype(float)
-    df["long"] = df["long"].astype(float)
+    df = df[[COL_LAT , COL_LONG, "fna"]].copy()
+    df[COL_LAT] = df[COL_LAT].astype(float)
+    df[COL_LONG] = df[COL_LONG].astype(float)
     df["fna"] = df["fna"].astype(str)
     
     return df
 
 df = load_data()
-coords_rad = np.vstack([np.radians(df["lat"].values), np.radians(df["long"].values)]).T
+coords_rad = np.vstack([np.radians(df[COL_LAT].values), np.radians(df[COL_LONG].values)]).T
 tree = BallTree(coords_rad, metric="haversine")
 
 @app.post("/api/salud", response_model=SaludResponseModel)
@@ -68,8 +70,8 @@ def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
 
     distances_km = haversine_vectorized(
         lat, long, 
-        df.iloc[indices]["lat"].values, 
-        df.iloc[indices]["long"].values
+        df.iloc[indices][COL_LAT].values, 
+        df.iloc[indices][COL_LONG].values
     )
 
     df_results = df.iloc[indices].copy()
@@ -78,8 +80,8 @@ def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
 
     results = [
         SaludResultModel(
-            lat=row["lat"],
-            long=row["long"], 
+            lat=row[COL_LAT],
+            long=row[COL_LONG], 
             fna=row["fna"],
             distance_km=row["distance_km"]
         )
