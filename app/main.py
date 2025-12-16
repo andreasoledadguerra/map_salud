@@ -5,9 +5,12 @@ from pydantic import BaseModel
 from sklearn.neighbors import BallTree
 from typing import List
 
+PATH = "establecimientos-salud-publicos.csv" 
 RADIUS_EARTH = 6371.0
 COL_LAT = "lat"
 COL_LONG = "long"
+
+
 
 app = FastAPI()
 
@@ -44,7 +47,7 @@ def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
     return RADIUS_EARTH * c
 
 # Load data 
-def load_data(path="establecimientos-salud-publicos.csv"):
+def load_data(PATH):
     df = pd.read_csv(path, delimiter=";")
     df = df[[COL_LAT , COL_LONG, "fna"]].copy()
     df[COL_LAT] = df[COL_LAT].astype(float)
