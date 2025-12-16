@@ -59,24 +59,20 @@ tree = BallTree(coords_rad, metric="haversine")
 
 @app.post("/api/salud", response_model=SaludResponseModel)
 def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
-    lat = req.lat
-    long = req.long 
-    radius_km = req.radius_km
-    top_n = req.top_n
 
-    point_rad = np.radians([[lat, long]])
-    radius_rad = radius_km / RADIUS_EARTH # 
+    point_rad = np.radians([[req.lat, req.long]])
+    radius_rad = req.radius_km / RADIUS_EARTH # 
     indices = tree.query_radius(point_rad, r=radius_rad)[0]
 
     distances_km = haversine_vectorized(
-        lat, long, 
+        req.lat, req.long, 
         df.iloc[indices][COL_LAT].values, 
         df.iloc[indices][COL_LONG].values
     )
 
     df_results = df.iloc[indices].copy()
     df_results["distance_km"] = distances_km
-    df_results = df_results.sort_values(by="distance_km").head(top_n)
+    df_results = df_results.sort_values(by="distance_km").head(req.top_n)
 
     results = [
         SaludResultModel(
