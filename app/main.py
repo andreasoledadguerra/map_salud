@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from sklearn.neighbors import BallTree
 from typing import List
 
+RADIUS_EARTH = 6371.0
+
 app = FastAPI()
 
 # Modelos Pydantic
@@ -26,7 +28,7 @@ class SaludResponseModel(BaseModel):
 
 # Haversine function
 def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
-    R = 6371
+    
     lat1_r = np.radians(lat1)
     lon1_r = np.radians(lon1)
     lat2_r = np.radians(lat2_arr)
@@ -37,7 +39,7 @@ def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
 
     a = np.sin(dlat / 2)**2 + np.cos(lat1_r) * np.cos(lat2_r) * np.sin(dlon / 2)**2
     c = 2 * np.arcsin(np.sqrt(a))
-    return R * c
+    return RADIUS_EARTH * c
 
 # Load data 
 def load_data(path="establecimientos-salud-publicos.csv"):
@@ -61,7 +63,7 @@ def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
     top_n = req.top_n
 
     point_rad = np.radians([[lat, long]])
-    radius_rad = radius_km / 6371.0
+    radius_rad = radius_km / RADIUS_EARTH # 
     indices = tree.query_radius(point_rad, r=radius_rad)[0]
 
     distances_km = haversine_vectorized(
@@ -85,11 +87,3 @@ def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
     ]
 
     return SaludResponseModel(request=req, results=results)
-
-#@app.get("/")
-#def root():
-#    return {"message": "Map Salud API", "status": "running", "endpoint": "/api/salud"}
-#
-#@app.get("/health")
-#def health_check():
-#    return {"status": "healthy", "data_points": len(df)}
