@@ -15,6 +15,8 @@ from app.data.constants import (
     KM_DISTANCE,
 )
 
+#from app.data.processs_load_data import load_data
+
 BASE_URL_MAP_SALUD = "http://localhost:8003"
 url_map_salud = f"{BASE_URL_MAP_SALUD}/api/salud"
 
@@ -23,15 +25,9 @@ st.title("Map Salud")
 
 # Cargar CSV local para mostrar markers 
 @st.cache_data
-def load_df(path=PATH):
-    df = pd.read_csv(PATH, sep=None, engine="python", on_bad_lines="warn")
-    df = df[[COL_LAT,COL_LONG,EST_SALUD]].copy()
-    df[COL_LAT] = df[COL_LAT].astype(float)
-    df[COL_LONG] = df[COL_LONG].astype(float)
-    df[EST_SALUD] = df[EST_SALUD].astype(str)
-    return df
 
-df = load_df(PATH)
+
+df = load_data(PATH)
 
 # Sidebar controls
 radius_km = st.sidebar.number_input("Radio (km)", min_value=0.1, max_value=50.0, value=1.0, step=0.1)
