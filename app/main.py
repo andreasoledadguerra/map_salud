@@ -14,6 +14,8 @@ from app.data.constants import (
     KM_DISTANCE,
 )
 
+from process_stream import load_data
+
 app = FastAPI()
 
 # Modelos Pydantic
@@ -35,15 +37,7 @@ class SaludResponseModel(BaseModel):
 
 
 
-# Load data 
-def load_data(path=PATH):
-    df = pd.read_csv(PATH, delimiter=";")
-    df = df[[COL_LAT , COL_LONG, EST_SALUD]].copy()
-    df[COL_LAT] = df[COL_LAT].astype(float)
-    df[COL_LONG] = df[COL_LONG].astype(float)
-    df[EST_SALUD] = df[EST_SALUD].astype(str)
-    
-    return df
+
 
 df = load_data(PATH)
 
