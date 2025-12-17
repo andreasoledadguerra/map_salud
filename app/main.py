@@ -10,6 +10,7 @@ RADIUS_EARTH = 6371.0
 COL_LAT = "lat"
 COL_LONG = "long"
 EST_SALUD = "fna"
+KM_DISTANCE = "distance_km"
 
 
 app = FastAPI()
@@ -74,15 +75,15 @@ def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
     )
 
     df_results = df.iloc[indices].copy()
-    df_results["distance_km"] = distances_km
-    df_results = df_results.sort_values(by="distance_km").head(req.top_n)
+    df_results[KM_DISTANCE] = distances_km
+    df_results = df_results.sort_values(by=KM_DISTANCE).head(req.top_n)
 
     results = [
         SaludResultModel(
             lat=row[COL_LAT],
             long=row[COL_LONG], 
             fna=row[EST_SALUD],
-            distance_km=row["distance_km"]
+            distance_km=row[KM_DISTANCE]
         )
         for _, row in df_results.iterrows()
     ]
