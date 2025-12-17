@@ -27,8 +27,6 @@ Map Salud is an interactive web application built with Streamlit that visualizes
    pip install streamlit pydeck
    ```
 
-3. Ensure you have the data file `establecimientos-salud-publicos.csv` in the project directory. This CSV should contain columns for `lat`, `long`, and `fna` (facility name).
-
 ## Usage
 
 1. Run main.py :
