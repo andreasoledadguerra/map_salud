@@ -14,8 +14,9 @@ from app.data.constants import (
     KM_DISTANCE,
 )
 
-from process_stream import load_data
+
 from app.models.schemas import SaludRequestModel,SaludResponseModel,SaludResultModel
+from app.data.processs_load_data import load_data
 
 app = FastAPI()
 
