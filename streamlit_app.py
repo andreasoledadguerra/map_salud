@@ -6,7 +6,7 @@ import requests
 import pandas as pd
 import numpy as np
 
-from .app.data.constants import (
+from app.data.constants import (
     PATH,
     RADIUS_EARTH,
     COL_LAT,
