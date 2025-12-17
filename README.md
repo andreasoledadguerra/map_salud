@@ -34,19 +34,15 @@ Map Salud is an interactive web application built with Streamlit that visualizes
    uvicorn app.main:app --host 0.0.0.0 --port 8003 --reload
    ```
 
-1. Run the Streamlit application:
+2. Run the Streamlit application:
    ```bash
    streamlit run app/streamlit_app.py
    ```
 
-2. Open your web browser and navigate to the provided local URL (usually `http://localhost:8003`).
+3. Open your web browser and navigate to the provided local URL (usually `http://localhost:8003`).
 
-3. Interact with the map: Zoom, pan, and hover over points to view facility details.
+4. Interact with the map: Zoom, pan, and hover over points to view facility details.
 
-For exploratory data analysis, you can also run the Jupyter notebook:
-```bash
-jupyter notebook main.ipynb
-```
 
 ## Dependencies
 
