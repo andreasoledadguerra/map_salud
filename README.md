@@ -31,12 +31,17 @@ Map Salud is an interactive web application built with Streamlit that visualizes
 
 ## Usage
 
-1. Run the Streamlit application:
+1. Run main.py :
    ```bash
-   streamlit run main.py
+   uvicorn app.main:app --host 0.0.0.0 --port 8003 --reload
    ```
 
-2. Open your web browser and navigate to the provided local URL (usually `http://localhost:8501`).
+1. Run the Streamlit application:
+   ```bash
+   streamlit run app/streamlit_app.py
+   ```
+
+2. Open your web browser and navigate to the provided local URL (usually `http://localhost:8003`).
 
 3. Interact with the map: Zoom, pan, and hover over points to view facility details.
 
@@ -47,20 +52,21 @@ jupyter notebook main.ipynb
 
 ## Dependencies
 
-- geopandas==1.1.1
-- numpy==2.2.6
-- pandas==2.3.3
-- streamlit (not listed in requirements.txt, install separately)
-- pydeck (not listed in requirements.txt, install separately)
+ - geopandas==1.1.1
+ - scikit-learn==1.8.0
+ - fastapi==0.124.4
+ - uvicorn==0.38.0
+ - streamlit==1.52.1
+ - folium==0.20.0
+ - streamlit_folium==0.25.3
 
 ## Data
 
 The application requires a CSV file named `establecimientos-salud-publicos.csv` with the following columns:
-- `lat`: Latitude of the health establishment
-- `long`: Longitude of the health establishment
-- `fna`: Name of the health facility
+- `lat` (COL_LAT): Latitude of the health establishment
+- `long`(COL_LONG): Longitude of the health establishment
+- `fna` (EST_SALUD) : Name of the health facility
 
-Ensure the data is in the correct format and placed in the project root directory.
 
 ## Project Structure
 
