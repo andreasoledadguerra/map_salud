@@ -14,7 +14,6 @@ from app.data.constants import (
     KM_DISTANCE,
 )
 
-
 from app.models.schemas import SaludRequestModel,SaludResponseModel,SaludResultModel
 from app.data.processs_load_data import load_data
 from app.services.geospatial import haversine_balltree
@@ -22,16 +21,15 @@ from app.services.geospatial import haversine_balltree
 app = FastAPI()
 
 df = load_data(PATH)
-
-
-#distances = haversine_balltree()
+coords = np.radians(df[[COL_LAT, COL_LONG]].values)
+tree = BallTree(coords, metric="haversine")
 
 
 @app.post("/api/salud", response_model=SaludResponseModel)
 def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
 
     point_rad = np.radians([[req.lat, req.long]])
-    radius_rad = req.radius_km / RADIUS_EARTH # 
+    radius_rad = req.radius_km / RADIUS_EARTH 
     indices = tree.query_radius(point_rad, r=radius_rad)[0]
 
     distances_km = haversine_balltree(
