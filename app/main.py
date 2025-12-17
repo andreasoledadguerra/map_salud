@@ -15,19 +15,14 @@ from app.data.constants import (
 )
 
 from process_stream import load_data
-#from app.models.schemas import SaludRequestModel,SaludResponseModel,SaludResultModel
+from app.models.schemas import SaludRequestModel,SaludResponseModel,SaludResultModel
 
 app = FastAPI()
 
-
-
-
-
 df = load_data(PATH)
 
-#
-#distances = haversine_balltree()
 
+#distances = haversine_balltree()
 
 
 @app.post("/api/salud", response_model=SaludResponseModel)
