@@ -5,13 +5,14 @@ from pydantic import BaseModel
 from sklearn.neighbors import BallTree
 from typing import List
 
-PATH = "establecimientos-salud-publicos.csv" 
-RADIUS_EARTH = 6371.0
-COL_LAT = "lat"
-COL_LONG = "long"
-EST_SALUD = "fna"
-KM_DISTANCE = "distance_km"
-
+from data.constants import (
+    PATH,
+    RADIUS_EARTH,
+    COL_LAT,
+    COL_LONG,
+    EST_SALUD,
+    KM_DISTANCE,
+)
 
 app = FastAPI()
 
