@@ -1,7 +1,12 @@
 import pandas as pd
 import numpy as np
 
-
+from app.data.constants import (
+    PATH,
+    COL_LAT,
+    COL_LONG,
+    EST_SALUD,
+)
 ## Load data 
 #def load_data(path=PATH) -> pd.DataFrame:
 #    df = pd.read_csv(PATH, delimiter=";")
