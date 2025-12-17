@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from sklearn.neighbors import BallTree
 from typing import List
 
-from data.constants import (
+from app.data.constants import (
     PATH,
     RADIUS_EARTH,
     COL_LAT,
@@ -49,7 +49,7 @@ def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
     return RADIUS_EARTH * c
 
 # Load data 
-def load_data(PATH):
+def load_data(path=PATH):
     df = pd.read_csv(PATH, delimiter=";")
     df = df[[COL_LAT , COL_LONG, EST_SALUD]].copy()
     df[COL_LAT] = df[COL_LAT].astype(float)
@@ -58,7 +58,7 @@ def load_data(PATH):
     
     return df
 
-df = load_data()
+df = load_data(PATH)
 coords_rad = np.vstack([np.radians(df[COL_LAT].values), np.radians(df[COL_LONG].values)]).T
 tree = BallTree(coords_rad, metric="haversine")
 
