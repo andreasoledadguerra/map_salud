@@ -9,7 +9,7 @@ PATH = "establecimientos-salud-publicos.csv"
 RADIUS_EARTH = 6371.0
 COL_LAT = "lat"
 COL_LONG = "long"
-
+EST_SALUD = "fna"
 
 
 app = FastAPI()
@@ -49,10 +49,10 @@ def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
 # Load data 
 def load_data(PATH):
     df = pd.read_csv(path, delimiter=";")
-    df = df[[COL_LAT , COL_LONG, "fna"]].copy()
+    df = df[[COL_LAT , COL_LONG, EST_SALUD]].copy()
     df[COL_LAT] = df[COL_LAT].astype(float)
     df[COL_LONG] = df[COL_LONG].astype(float)
-    df["fna"] = df["fna"].astype(str)
+    df[EST_SALUD] = df[EST_SALUD].astype(str)
     
     return df
 
@@ -81,7 +81,7 @@ def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
         SaludResultModel(
             lat=row[COL_LAT],
             long=row[COL_LONG], 
-            fna=row["fna"],
+            fna=row[EST_SALUD],
             distance_km=row["distance_km"]
         )
         for _, row in df_results.iterrows()
