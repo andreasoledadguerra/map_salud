@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from fastapi import FastAPI
+from fastapi import FastAPI, requests
 from pydantic import BaseModel
 from sklearn.neighbors import BallTree
 from typing import List
@@ -33,20 +33,7 @@ class SaludResponseModel(BaseModel):
     request: SaludRequestModel
     results: List[SaludResultModel]
 
-# Haversine function
-def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
-    
-    lat1_r = np.radians(lat1)
-    lon1_r = np.radians(lon1)
-    lat2_r = np.radians(lat2_arr)
-    lon2_r = np.radians(lon2_arr)
 
-    dlat = lat2_r - lat1_r
-    dlon = lon2_r - lon1_r
-
-    a = np.sin(dlat / 2)**2 + np.cos(lat1_r) * np.cos(lat2_r) * np.sin(dlon / 2)**2
-    c = 2 * np.arcsin(np.sqrt(a))
-    return RADIUS_EARTH * c
 
 # Load data 
 def load_data(path=PATH):
@@ -59,8 +46,11 @@ def load_data(path=PATH):
     return df
 
 df = load_data(PATH)
-coords_rad = np.vstack([np.radians(df[COL_LAT].values), np.radians(df[COL_LONG].values)]).T
-tree = BallTree(coords_rad, metric="haversine")
+
+#
+#distances = haversine_balltree()
+
+
 
 @app.post("/api/salud", response_model=SaludResponseModel)
 def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
@@ -69,7 +59,7 @@ def post_establecimientos(req: SaludRequestModel) -> SaludResponseModel:
     radius_rad = req.radius_km / RADIUS_EARTH # 
     indices = tree.query_radius(point_rad, r=radius_rad)[0]
 
-    distances_km = haversine_vectorized(
+    distances_km = haversine_balltree(
         req.lat, req.long, 
         df.iloc[indices][COL_LAT].values, 
         df.iloc[indices][COL_LONG].values
