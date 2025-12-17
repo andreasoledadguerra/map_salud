@@ -55,26 +55,7 @@ if map_data and map_data.get("last_clicked"):
         "radius_km": float(radius_km), 
         "top_n": int(top_n)
     }
-    
-    # Debug: mostrar payload
-    #st.sidebar.write("📤 Enviando payload:", payload)
-    #
-    #try:
-    #    resp = requests.post(url_map_salud, json=payload, timeout=5.0)
-    #    resp.raise_for_status()
-    #    data = resp.json()
-    #    st.sidebar.success("✅ API respondió correctamente")
-    #except Exception as e:
-    #    st.error(f"Error llamando al API: {e}")
-    #    # Mostrar detalles del error si es 422
-    #    if hasattr(e, 'response') and e.response is not None:
-    #        try:
-    #            error_detail = e.response.json()
-    #            st.error("Detalles del error:")
-    #            st.write(error_detail)
-    #        except:
-    #            st.error(f"Respuesta cruda: {e.response.text}")
-    #    data = None
+
     resp = requests.post(url_map_salud, json=payload, timeout=5.0)
     data = resp.json()
     if data:
