@@ -6,6 +6,15 @@ import requests
 import pandas as pd
 import numpy as np
 
+from data.constants import (
+    PATH,
+    RADIUS_EARTH,
+    COL_LAT,
+    COL_LONG,
+    EST_SALUD,
+    KM_DISTANCE,
+)
+
 BASE_URL_MAP_SALUD = "http://localhost:8003"
 url_map_salud = f"{BASE_URL_MAP_SALUD}/api/salud"
 
@@ -14,12 +23,12 @@ st.title("Map Salud")
 
 # Cargar CSV local para mostrar markers 
 @st.cache_data
-def load_df(path="establecimientos-salud-publicos.csv"):
-    df = pd.read_csv(path, sep=None, engine="python", on_bad_lines="warn")
-    df = df[["lat","long","fna"]].copy()
-    df["lat"] = df["lat"].astype(float)
-    df["long"] = df["long"].astype(float)
-    df["fna"] = df["fna"].astype(str)
+def load_df(PATH):
+    df = pd.read_csv(PATH, sep=None, engine="python", on_bad_lines="warn")
+    df = df[[COL_LAT,COL_LONG,EST_SALUD]].copy()
+    df[COL_LAT] = df[COL_LAT].astype(float)
+    df[COL_LONG] = df[COL_LONG].astype(float)
+    df[EST_SALUD] = df[EST_SALUD].astype(str)
     return df
 
 df = load_df()
@@ -30,8 +39,8 @@ top_n = st.sidebar.number_input("Max resultados", min_value=1, max_value=200, va
 show_all = st.sidebar.checkbox("Mostrar todos los marcadores", value=False)
 
 # Build initial map
-center_lat = float(df["lat"].mean())
-center_lon = float(df["long"].mean())
+center_lat = float(df[COL_LAT].mean())
+center_lon = float(df[COL_LONG].mean())
 m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
 
 if show_all:
@@ -45,7 +54,7 @@ map_data = st_folium(m, width=900, height=600)
 if map_data and map_data.get("last_clicked"):
     click = map_data["last_clicked"]
     lat = click["lat"]
-    lng = click["lng"]  # Folium devuelve "lng", lo mantenemos como variable
+    lng = click["lng"]
     st.sidebar.success(f"Clicked: {lat:.6f}, {lng:.6f}")
 
     # Llamar al endpoint POST 
