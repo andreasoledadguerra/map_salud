@@ -36,7 +36,7 @@ Map Salud is an interactive web application built with Streamlit that visualizes
 
 2. Run the Streamlit application:
    ```bash
-   streamlit run app/streamlit_app.py
+   streamlit run streamlit_app.py
    ```
 
 3. Open your web browser and navigate to the provided local URL (usually `http://localhost:8003`).
