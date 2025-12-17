@@ -6,7 +6,7 @@ import requests
 import pandas as pd
 import numpy as np
 
-from data.constants import (
+from app.data.constants import (
     PATH,
     RADIUS_EARTH,
     COL_LAT,
@@ -23,7 +23,7 @@ st.title("Map Salud")
 
 # Cargar CSV local para mostrar markers 
 @st.cache_data
-def load_df(PATH):
+def load_df(path=PATH):
     df = pd.read_csv(PATH, sep=None, engine="python", on_bad_lines="warn")
     df = df[[COL_LAT,COL_LONG,EST_SALUD]].copy()
     df[COL_LAT] = df[COL_LAT].astype(float)
@@ -31,7 +31,7 @@ def load_df(PATH):
     df[EST_SALUD] = df[EST_SALUD].astype(str)
     return df
 
-df = load_df()
+df = load_df(PATH)
 
 # Sidebar controls
 radius_km = st.sidebar.number_input("Radio (km)", min_value=0.1, max_value=50.0, value=1.0, step=0.1)
