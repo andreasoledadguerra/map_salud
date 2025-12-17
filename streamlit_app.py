@@ -23,11 +23,18 @@ url_map_salud = f"{BASE_URL_MAP_SALUD}/api/salud"
 st.set_page_config(page_title="Map Salud (cliente)", layout="wide", page_icon="🏥")
 st.title("Map Salud")
 
+
 # Cargar CSV local para mostrar markers 
 @st.cache_data
+def get_data():
+    return load_data(PATH)
+
+df = get_data()
 
 
-df = load_data(PATH)
+# Cargar CSV local para mostrar markers 
+#@st.cache_data
+#df = load_data(PATH)
 
 # Sidebar controls
 radius_km = st.sidebar.number_input("Radio (km)", min_value=0.1, max_value=50.0, value=1.0, step=0.1)
