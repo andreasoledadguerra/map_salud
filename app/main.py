@@ -49,7 +49,7 @@ def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
 
 # Load data 
 def load_data(PATH):
-    df = pd.read_csv(path, delimiter=";")
+    df = pd.read_csv(PATH, delimiter=";")
     df = df[[COL_LAT , COL_LONG, EST_SALUD]].copy()
     df[COL_LAT] = df[COL_LAT].astype(float)
     df[COL_LONG] = df[COL_LONG].astype(float)
