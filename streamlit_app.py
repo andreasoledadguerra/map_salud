@@ -15,7 +15,7 @@ from app.data.constants import (
     KM_DISTANCE,
 )
 
-from app.data.processs_load_data import load_data
+from app.data.process_load_data import load_data
 
 BASE_URL_MAP_SALUD = "http://localhost:8003"
 url_map_salud = f"{BASE_URL_MAP_SALUD}/api/salud"
