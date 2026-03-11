@@ -1,16 +1,23 @@
 import numpy as np
+from sklearn.neighbors import BallTree
 
-# Haversine function
-def haversine_vectorized(lat1:float, lon1:float, lat2_arr:float, lon2_arr:float)->float:
-    R = 6371
-    lat1_r = np.radians(lat1)
-    lon1_r = np.radians(lon1)
-    lat2_r = np.radians(lat2_arr)
-    lon2_r = np.radians(lon2_arr)
+from app.data.constants import RADIUS_EARTH
 
-    dlat = lat2_r - lat1_r
-    dlon = lon2_r - lon1_r
 
-    a = np.sin(dlat / 2)**2 + np.cos(lat1_r) * np.cos(lat2_r) * np.sin(dlon / 2)**2
-    c = 2 * np.arcsin(np.sqrt(a))
-    return R * c
+def haversine_balltree(
+    lat_in: float,
+    lon_in: float,
+    lat_out: np.ndarray,
+    lon_out: np.ndarray
+) -> np.ndarray:
+    """
+    Calcula distancias Haversine usando BallTree.
+    Devuelve distancias en kilómetros.
+    """
+    point = np.radians([[lat_in, lon_in]])
+    coords = np.radians(np.column_stack((lat_out, lon_out)))
+
+    tree = BallTree(coords, metric="haversine")
+    distances, _ = tree.query(point, k=len(coords))
+
+    return distances[0] * RADIUS_EARTH

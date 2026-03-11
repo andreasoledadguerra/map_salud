@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 import os
-from processs_load_data import load_data
+from app.data.process_load_data import load_data
 
 def test_load_data():
     

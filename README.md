@@ -1,6 +1,6 @@
 # Map Salud
 
-Map Salud is an interactive web application built with Streamlit that visualizes public health establishments on a map using geospatial data. It leverages GeoPandas for data processing and PyDeck for rendering interactive maps, allowing users to explore health facilities in a given region.
+Map Salud is an interactive web application built with Streamlit that visualizes public health establishments on a map using geospatial data. It leverages Folium for data processing allowing users to explore health facilities in a given region from Buenos Aires Province, Argentina. 
 
 ## Features
 
@@ -22,45 +22,43 @@ Map Salud is an interactive web application built with Streamlit that visualizes
    pip install -r requirements.txt
    ```
 
-   Note: The `requirements.txt` file includes core dependencies. You may need to install additional packages like `streamlit` and `pydeck` if not already present:
+   Note: The `requirements.txt` file includes core dependencies. You may need to install additional packages like `streamlit` if not already present:
    ```bash
-   pip install streamlit pydeck
+   pip install streamlit
    ```
-
-3. Ensure you have the data file `establecimientos-salud-publicos.csv` in the project directory. This CSV should contain columns for `lat`, `long`, and `fna` (facility name).
 
 ## Usage
 
-1. Run the Streamlit application:
+1. Run main.py :
    ```bash
-   streamlit run main.py
+   uvicorn app.main:app --host 0.0.0.0 --port 8003 --reload
    ```
 
-2. Open your web browser and navigate to the provided local URL (usually `http://localhost:8501`).
+2. Run the Streamlit application:
+   ```bash
+   streamlit run streamlit_app.py
+   ```
 
-3. Interact with the map: Zoom, pan, and hover over points to view facility details.
+3. Open your web browser and navigate to the provided local URL (usually `http://localhost:8003`).
 
-For exploratory data analysis, you can also run the Jupyter notebook:
-```bash
-jupyter notebook main.ipynb
-```
+4. Interact with the map: Zoom, pan, and hover over points to view facility details.
+
 
 ## Dependencies
-
-- geopandas==1.1.1
-- numpy==2.2.6
-- pandas==2.3.3
-- streamlit (not listed in requirements.txt, install separately)
-- pydeck (not listed in requirements.txt, install separately)
+ - scikit-learn==1.8.0
+ - fastapi==0.124.4
+ - uvicorn==0.38.0
+ - streamlit==1.52.1
+ - folium==0.20.0
+ - streamlit_folium==0.25.3
 
 ## Data
 
 The application requires a CSV file named `establecimientos-salud-publicos.csv` with the following columns:
-- `lat`: Latitude of the health establishment
-- `long`: Longitude of the health establishment
-- `fna`: Name of the health facility
+- `lat` (COL_LAT): Latitude of the health establishment
+- `long`(COL_LONG): Longitude of the health establishment
+- `fna` (EST_SALUD) : Name of the health facility
 
-Ensure the data is in the correct format and placed in the project root directory.
 
 ## Project Structure
 
