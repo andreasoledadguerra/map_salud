@@ -1,6 +1,6 @@
 # Map Salud
 
-Map Salud is an interactive web application built with Streamlit that visualizes public health establishments on a map using geospatial data. It leverages GeoPandas for data processing and PyDeck for rendering interactive maps, allowing users to explore health facilities in a given region from Buenos Aires Province, Argentina. 
+Map Salud is an interactive web application built with Streamlit that visualizes public health establishments on a map using geospatial data. It leverages Folium for data processing allowing users to explore health facilities in a given region from Buenos Aires Province, Argentina. 
 
 ## Features
 
