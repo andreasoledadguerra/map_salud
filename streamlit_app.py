@@ -31,17 +31,12 @@ def get_data():
 
 df = get_data()
 
-
-# Cargar CSV local para mostrar markers 
-#@st.cache_data
-#df = load_data(PATH)
-
-# Sidebar controls
+# Controles de barra lateral
 radius_km = st.sidebar.number_input("Radio (km)", min_value=0.1, max_value=50.0, value=1.0, step=0.1)
 top_n = st.sidebar.number_input("Max resultados", min_value=1, max_value=200, value=10, step=1)
 show_all = st.sidebar.checkbox("Mostrar todos los marcadores", value=False)
 
-# Build initial map
+# Construir un mapa inicial
 center_lat = float(df[COL_LAT].mean())
 center_lon = float(df[COL_LONG].mean())
 m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
