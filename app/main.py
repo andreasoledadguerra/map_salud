@@ -15,7 +15,7 @@ from app.data.constants import (
 )
 
 from app.models.schemas import SaludRequestModel,SaludResponseModel,SaludResultModel
-from app.data.processs_load_data import load_data
+from app.data.process_load_data import load_data
 from app.services.geospatial import haversine_balltree
 
 app = FastAPI()
