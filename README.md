@@ -22,9 +22,9 @@ Map Salud is an interactive web application built with Streamlit that visualizes
    pip install -r requirements.txt
    ```
 
-   Note: The `requirements.txt` file includes core dependencies. You may need to install additional packages like `streamlit` and `pydeck` if not already present:
+   Note: The `requirements.txt` file includes core dependencies. You may need to install additional packages like `streamlit` if not already present:
    ```bash
-   pip install streamlit pydeck
+   pip install streamlit
    ```
 
 ## Usage
@@ -45,8 +45,6 @@ Map Salud is an interactive web application built with Streamlit that visualizes
 
 
 ## Dependencies
-
- - geopandas==1.1.1
  - scikit-learn==1.8.0
  - fastapi==0.124.4
  - uvicorn==0.38.0
